@@ -1,4 +1,4 @@
-[RedisDelayQueue接入方法](https://github.com/shirenchuang/redis-delay-queue/wiki/RedisDelayQueue%E6%8E%A5%E5%85%A5%E6%96%B9%E6%B3%95)
+[RedisDelayQueue接入方法](https://blog.csdn.net/tuixiusongwaimai/article/details/103527358)
 
 
 

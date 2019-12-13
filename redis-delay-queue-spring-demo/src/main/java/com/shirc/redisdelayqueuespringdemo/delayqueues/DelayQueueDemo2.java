@@ -35,9 +35,9 @@ public class DelayQueueDemo2 extends AbstractTopicRegister<Args> {
     @Override
     public void execute(Args args) {
         //故意抛出一个异常
-        if(1/0==0){
+       /* if(1/0==0){
 
-        }
+        }*/
 
         logger.info("执行了Demo2的延时任务..{}",args);
     }
