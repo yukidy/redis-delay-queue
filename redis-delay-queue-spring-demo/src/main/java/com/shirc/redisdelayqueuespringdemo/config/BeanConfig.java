@@ -3,6 +3,7 @@ package com.shirc.redisdelayqueuespringdemo.config;
 import com.shirc.redis.delay.queue.core.RedisDelayQueueContext;
 import com.shirc.redis.delay.queue.iface.RedisDelayQueue;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -11,14 +12,17 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
 /**
- * @Description 接入Redis_Delay_Queue
- * @Author shirenchuang
- * @Date 2019/8/1 9:41 AM
- **/
+ * @author: 唐晓东
+ * @since: 10:17 2021/7/23
+ * @version: v1.0
+ * @description: 接入Redis_Delay_Queue
+ */
 @Component
 public class BeanConfig {
 
 
+    @Value("${delay.queue.project-name}")
+    private String projectName;
 
     private RedisTemplate redisTemplate;
 
@@ -39,7 +43,7 @@ public class BeanConfig {
 
     @Bean
     public RedisDelayQueueContext getRdctx(){
-        RedisDelayQueueContext context =  new RedisDelayQueueContext(redisTemplate,"dq_demo");
+        RedisDelayQueueContext context =  new RedisDelayQueueContext(redisTemplate, projectName);
         return context;
     }
 

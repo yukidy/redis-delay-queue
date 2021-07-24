@@ -15,6 +15,7 @@ import com.shirc.redis.delay.queue.threads.ShutdownThread;
 import com.shirc.redis.delay.queue.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.types.RedisClientInfo;
 import org.springframework.util.StringUtils;
@@ -24,12 +25,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.*;
 
-
 /**
- * @Description redis延迟队列 核心类
- * @Author shirenchuang
- * @Date 2019/7/31 9:16 AM
- **/
+ * @author: 唐晓东
+ * @since: 9:46 2021/7/23
+ * @version: v1.0
+ * @description: redis延迟队列 核心类
+ */
 public  class RedisDelayQueueContext   {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisDelayQueueContext.class);
@@ -74,9 +75,6 @@ public  class RedisDelayQueueContext   {
 
 
 
-
-
-
     /**
      * 保证机制: 避免某台持有最小nextTime的机器挂掉;而导致不能准时消费
      * 唤醒线程: 每分钟唤醒一次  搬运线程
@@ -107,7 +105,7 @@ public  class RedisDelayQueueContext   {
     private void init(){
         //启动监听Bucket线程
         Move2ReadyThread.getInstance().runMove2ReadyThread(redisOperation);
-        //支持BLPOP吗
+        //是否支持BLPOP
         checkBlpop();
         //5秒后启动Topic的监听线程池
         runTopicsThreadAfter5Sec();
@@ -117,10 +115,10 @@ public  class RedisDelayQueueContext   {
         registerDestory();
     }
 
-    //检查是否能够支持 BLPOP的操作;  codis 等集群不支持BLPOP
+    //检查是否能够支持BLPOP的操作
     private void checkBlpop(){
         try {
-             redisOperation.BLPOP("ShiRenChuang_11&*",5000);
+             redisOperation.BLPOP("TangXiaoDong_11&*",5000);
              canUseBlpop = true;
         }catch (Exception e){
             // nested exception is io.lettuce.core.RedisCommandTimeoutException
@@ -153,7 +151,6 @@ public  class RedisDelayQueueContext   {
     /**
      * 5秒后启动注册 TOPIC消息线程;
      * 为啥不直接启动,因为AbstractTopicRegister有可能还没有被注册;所以这里等5秒再去(应该差不多注册完了吧)
-     * TODO:有啥更好的方法? 就是想让AbstractTopicRegister注册完了再启动;
      * Spring是有等所有Bean加载完了再调用方法;但是我不想把这种事情放到业务方去做;
      * **/
     private void runTopicsThreadAfter5Sec(){
@@ -166,9 +163,6 @@ public  class RedisDelayQueueContext   {
             runTopicsThreads();
         }).start();
     }
-
-
-
 
 
     /**
@@ -203,7 +197,7 @@ public  class RedisDelayQueueContext   {
 
     private void runTopicThreads(AbstractTopicRegister register) {
 
-            //同时执行的线程数量不能超过register.getMaxPoolSize()数量,
+            // 同时执行的线程数量不能超过register.getMaxPoolSize()数量,
             // 因为不打算将任务放入到线程池的阻塞队列,直接用redis的list当做阻塞队列,防止宕机丢失任务
             Semaphore semaphore = new Semaphore(register.getMaxPoolSize());
             Thread a = new Thread(()->{
@@ -251,7 +245,7 @@ public  class RedisDelayQueueContext   {
                                         args = redisOperation.getJob(topicId + "");
                                         if (args != null) {
                                             try {
-                                                checkTimeoutExectue(register.getMethodTimeout(),register, args);
+                                                checkTimeoutExectue(register.getMethodTimeout(), register, args);
                                                 if(args.getRetryCount()>0){
                                                     logger.info("重试延迟任务第{}次重试消费成功,topicId:{},Args:{} ",args.getRetryCount(),RedisKeyUtil.getTopicId(register.getTopic(),args.getId()),args.toString());
                                                 }else {
@@ -321,21 +315,21 @@ public  class RedisDelayQueueContext   {
      * 那么这个JOb就没有被消费了;所有这个时候要重新push到List中;
      */
     private void againRightPush(String topic,Args args) {
-        if(args.getReentry()>2){
+        if(args.getReentry() > 2){
             logger.error("未被消费任务topicId:{},重入了3次仍旧失败",RedisKeyUtil.getTopicId(topic,args.getId()));
         }else {
             RPUSH_NO_EXEC_JOB.execute(()->{
                 //获取JOb的方法连接失败了 异步重新放入;
                 logger.warn("未被消费任务topicId:{} 重新放入待消费队列",RedisKeyUtil.getTopicId(topic,args.getId()));
-                args.setRetryCount(args.getReentry()+1);
-                redisOperation.retryJob(topic,args.getId(),args);
+                args.setRetryCount(args.getReentry() + 1);
+                redisOperation.retryJob(topic,args.getId(), args);
             });
         }
 
     }
 
 
-    final public static void addTopic(String topic,AbstractTopicRegister register){
+    final public static void addTopic(String topic, AbstractTopicRegister register){
         if(null!= topicRegisterHolder.get(topic)){
             throw new DelayQueueException("Topic 注册重复,请保证Topic唯一");
         }
@@ -363,12 +357,12 @@ public  class RedisDelayQueueContext   {
      * 如果回调函数特别耗费时间,或者BLPOP刚好在第9秒获取到了元素,那么就只留给回调函数1秒;
      * 很有可能执行不完;
      *
-     * 解决方法 ①、  可以把BLOPO连接 的超时时间设置为5秒; 根据状态位tostop
+     * 解决方法 1、  可以把BLPOP连接 的超时时间设置为5秒; 根据状态位tostop
      * 就不会再继续BLPOP取数据了,最坏情况留给回调函数5秒执行完够了;
      * 但是这样又会带入一个新的问题;   就是如果消息队列一直没有消息;  那么TOPIC的消费线程池就会
      * 每隔5秒创建一次连接然后关闭;  这样太浪费系统资源了;
      *
-     * 解决方案 ②、立刻断开开那些BLOPO的客户端;
+     * 解决方案 2、立刻断开开那些BLPOP的客户端;
      *             但是这样可能误杀其他服务的BLPOP连接(问题不大)
      *
      * 如果是一个线程跟redis连接 那选方案一  如果是用很多线程跟redis保持长连接 那选方案二
@@ -393,7 +387,6 @@ public  class RedisDelayQueueContext   {
                     &&info.getLastCommand().equals("blpop")){
                 kills.add(info.getAddressPort());
                 logger.info("优雅关机,杀掉redis的Blpop客户端;{}",info.getAddressPort());
-
             }
         }
         redisOperation.killClient(kills);

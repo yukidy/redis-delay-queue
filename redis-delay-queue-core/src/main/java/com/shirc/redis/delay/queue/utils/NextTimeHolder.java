@@ -30,7 +30,7 @@ public class NextTimeHolder {
      */
     public static void tryUpdate(long newTime){
         LongUnaryOperator updateFunction = (a)->{
-            if(newTime<nextTime.get()){
+            if(newTime < nextTime.get()){
                 logger.warn("==================尝试更新为newTime:{}==================",newTime);
                 return newTime;
             }

@@ -16,11 +16,6 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Description redis的操作类,不过都是执行的Lua脚本
- * @Author shirenchuang
- * @Date 2019/8/1 3:20 PM
- **/
 public class RedisOperationByLua extends RedisOperationByNormal{
 
     private static final Logger logger = LoggerFactory.getLogger(RedisOperationByLua.class);

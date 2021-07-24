@@ -6,10 +6,11 @@ import org.springframework.data.redis.core.types.RedisClientInfo;
 import java.util.List;
 
 /**
- * @Description redis操作
- * @Author shirenchuang
- * @Date 2019/7/30 5:38 PM
- **/
+ * @author: 唐晓东
+ * @since: 10:32 2021/7/23
+ * @version: v1.0
+ * @description: redis操作类
+ */
 public interface RedisOperation {
 
     /**

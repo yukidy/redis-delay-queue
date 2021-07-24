@@ -1,10 +1,11 @@
 package com.shirc.redis.delay.queue.common;
 
 /**
- * @Description 延迟队列全局参数
- * @Author shirenchuang
- * @Date 2019/7/30 4:48 PM
- **/
+ * @author: 唐晓东
+ * @since: 9:42 2021/7/23
+ * @version: v1.0
+ * @description: 延迟队列全局参数
+ */
 public class RedisQueueKeys {
 
     /**

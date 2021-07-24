@@ -9,11 +9,13 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
 /**
- * @Description 搬运线程
- * @Author shirenchuang
- * @Date 2019/8/4 10:18 AM
- **/
+ * @author: 唐晓东
+ * @since: 10:34 2021/7/23
+ * @version: v1.0
+ * @description: 搬运操作 redis + lua 操作保证原子性
+ */
 public class Move2ReadyThread {
 
     private static final Logger logger = LoggerFactory.getLogger(Move2ReadyThread.class);

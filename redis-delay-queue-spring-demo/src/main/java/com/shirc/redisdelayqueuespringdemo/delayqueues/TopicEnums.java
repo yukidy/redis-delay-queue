@@ -7,7 +7,7 @@ package com.shirc.redisdelayqueuespringdemo.delayqueues;
  **/
 public enum  TopicEnums  {
 
-
+    DELAY_QUEUE_TEST_TOPIC("DELAY_QUEUE_TOPIC", "第一个线上测试TOPIC"),
     DEMO_TOPIC("DEMO_TOPIC","第一个测试TOPIC"),
     DEMO_TOPIC_2("DEMO_TOPIC_2","第二个测试TOPIC"),
 

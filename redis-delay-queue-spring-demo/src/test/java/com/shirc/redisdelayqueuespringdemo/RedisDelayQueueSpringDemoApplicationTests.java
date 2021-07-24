@@ -4,8 +4,7 @@ import com.shirc.redis.delay.queue.common.Args;
 import com.shirc.redis.delay.queue.core.RedisDelayQueueContext;
 import com.shirc.redis.delay.queue.utils.RedisKeyUtil;
 import com.google.common.collect.Lists;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class RedisDelayQueueSpringDemoApplicationTests {
 
@@ -32,9 +30,6 @@ public class RedisDelayQueueSpringDemoApplicationTests {
 
     @Autowired
     RedisDelayQueueContext redisDelayQueueContext;
-
-
-
 
 
 

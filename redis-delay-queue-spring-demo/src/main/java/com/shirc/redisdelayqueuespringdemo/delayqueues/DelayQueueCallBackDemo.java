@@ -59,13 +59,12 @@ public class DelayQueueCallBackDemo extends AbstractTopicRegister<MyArgs> {
         long needRunTime = s.getShoudRunTime().getTime();
         long now = System.currentTimeMillis();
         long delayTime = now - needRunTime;
-        try {
-
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-
-        }
-        logger.debug("DEMO_TOPIC:成功!,当前时间:{};执行推迟了时间:{},ID:",new Date(),delayTime,s.getId());
+//        try {
+//            Thread.sleep(10000);
+//        } catch (InterruptedException e) {
+//
+//        }
+        logger.info("DEMO_TOPIC:成功!,当前时间:{};执行推迟了时间:{},ID:",new Date(),delayTime,s.getId());
     }
 
     @Override

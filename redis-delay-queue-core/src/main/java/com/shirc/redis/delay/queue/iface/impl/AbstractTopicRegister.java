@@ -12,10 +12,11 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Description TODO
- * @Author shirenchuang
- * @Date 2019/7/31 9:05 AM
- **/
+ * @author: 唐晓东
+ * @since: 9:52 2021/7/23
+ * @version: v1.0
+ * @description:
+ */
 public abstract class AbstractTopicRegister <T extends Args> implements CallBack<T> {
 
 
@@ -29,7 +30,7 @@ public abstract class AbstractTopicRegister <T extends Args> implements CallBack
     }
 
     /**线程池默认核心数**/
-    private int corePoolSize = 2;
+    private int corePoolSize = 3;
 
     /**线程池默认最大线程数**/
     private int maxPoolSize = 20;
@@ -54,12 +55,6 @@ public abstract class AbstractTopicRegister <T extends Args> implements CallBack
 
 
 
-
-
-
-
-
-
     final public ThreadPoolExecutor getTOPIC_THREADS() {
         return TOPIC_THREADS;
     }
@@ -70,7 +65,7 @@ public abstract class AbstractTopicRegister <T extends Args> implements CallBack
 
     @Override
     public void retryOutTimes(T t) {
-        logger.error("警告! Topic:{},Id:{} 已经重试仍然失败~ 请大佬关注一下 ",getTopic(),t.getId());
+        logger.error("警告! Topic:{},Id:{} 已经重试仍然失败~~~", getTopic(), t.getId());
     }
 
     /**

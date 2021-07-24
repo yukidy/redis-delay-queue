@@ -1,10 +1,11 @@
 package com.shirc.redis.delay.queue.common;
 
 /**
- * @Description 同步调用还是异步调用
- * @Author shirenchuang
- * @Date 2019/8/7 10:32 AM
- **/
+ * @author: 唐晓东
+ * @since: 9:45 2021/7/23
+ * @version: v1.0
+ * @description:
+ */
 public enum  RunTypeEnum {
 
     /**同步**/

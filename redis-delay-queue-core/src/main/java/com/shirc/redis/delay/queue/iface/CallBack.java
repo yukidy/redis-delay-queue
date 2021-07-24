@@ -3,10 +3,11 @@ package com.shirc.redis.delay.queue.iface;
 import com.shirc.redis.delay.queue.common.Args;
 
 /**
- * @Description 回调接口
- * @Author shirenchuang
- * @Date 2019/7/31 8:57 AM
- **/
+ * @author: 唐晓东
+ * @since: 9:58 2021/7/23
+ * @version: v1.0
+ * @description: 回调接口
+ */
 public interface CallBack<T extends Args> {
 
     /**

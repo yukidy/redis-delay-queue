@@ -15,14 +15,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 
 /**
- * @Description 提供给客户端使用的 延迟队列操作
- * @Author shirenchuang
- * @Date 2019/7/30 5:33 PM
- **/
+ * @author: 唐晓东
+ * @since: 10:28 2021/7/23
+ * @version: v1.0
+ * @description: 延时队列操作实现类
+ */
 public  class RedisDelayQueueImpl implements RedisDelayQueue {
+
     private static final Logger logger = LoggerFactory.getLogger(RedisDelayQueueContext.class);
-
-
 
     private RedisOperation redisOperation;
     private ConcurrentHashMap<String, AbstractTopicRegister> topicRegisterHolder;
@@ -61,8 +61,8 @@ public  class RedisDelayQueueImpl implements RedisDelayQueue {
 
     private void addJob(Args args, long delayTimeMillis, String topic) {
         preCheck(args,topic,null,delayTimeMillis);
-        long runTimeMillis = System.currentTimeMillis()+delayTimeMillis;
-        redisOperation.addJob(topic,args,runTimeMillis);
+        long runTimeMillis = System.currentTimeMillis() + delayTimeMillis;
+        redisOperation.addJob(topic, args, runTimeMillis);
         //尝试更新下次的执行时间
         NextTimeHolder.tryUpdate(runTimeMillis);
     }

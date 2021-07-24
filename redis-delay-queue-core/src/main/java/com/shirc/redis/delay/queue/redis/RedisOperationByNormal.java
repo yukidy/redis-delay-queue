@@ -13,10 +13,11 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Description redis的操作类; 线程不安全; 不可使用
- * @Author shirenchuang
- * @Date 2019/8/1 3:12 PM
- **/
+ * @author: 唐晓东
+ * @since: 10:30 2021/7/23
+ * @version: v1.0
+ * @description: 线程不安全，不使用
+ */
 public class RedisOperationByNormal implements RedisOperation {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisOperationByNormal.class);

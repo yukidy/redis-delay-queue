@@ -10,10 +10,11 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.*;
 
 /**
- * @Description 失败重试线程
- * @Author shirenchuang
- * @Date 2019/8/4 10:02 AM
- **/
+ * @author: 唐晓东
+ * @since: 10:35 2021/7/23
+ * @version: v1.0
+ * @description: 失败重试机制
+ */
 public class RetryOutTimesThread {
     private static final Logger logger = LoggerFactory.getLogger(RetryOutTimesThread.class);
 

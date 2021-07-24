@@ -4,10 +4,11 @@ import com.shirc.redis.delay.queue.core.RedisDelayQueueContext;
 import com.shirc.redis.delay.queue.common.RedisQueueKeys;
 
 /**
- * @Description
- * @Author shirenchuang
- * @Date 2019/7/31 10:18 AM
- **/
+ * @author: 唐晓东
+ * @since: 10:24 2021/7/23
+ * @version: v1.0
+ * @description: key工具类
+ */
 public class RedisKeyUtil {
 
     /**

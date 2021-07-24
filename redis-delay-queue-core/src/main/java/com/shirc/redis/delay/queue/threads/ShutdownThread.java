@@ -9,10 +9,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Description 关闭线程池
- * @Author shirenchuang
- * @Date 2019/8/3 10:28 AM
- **/
+ * @author: 唐晓东
+ * @since: 10:37 2021/7/23
+ * @version: v1.0
+ * @description: 关闭线程池
+ */
 public class ShutdownThread {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisDelayQueueContext.class);

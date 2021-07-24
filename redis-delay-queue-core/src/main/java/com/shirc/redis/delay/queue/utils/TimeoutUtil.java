@@ -1,5 +1,8 @@
 package com.shirc.redis.delay.queue.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.*;
 import java.util.function.Function;
 
@@ -9,6 +12,8 @@ import java.util.function.Function;
  * @Date 2019/8/4 2:48 PM
  **/
 public class TimeoutUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(TimeoutUtil.class);
 
     /**执行用户回调接口的 线程池;    计算回调接口的超时时间           **/
     private static ExecutorService executorService = Executors.newCachedThreadPool();

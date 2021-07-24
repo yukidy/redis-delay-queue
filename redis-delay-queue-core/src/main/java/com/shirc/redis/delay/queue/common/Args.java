@@ -4,12 +4,13 @@ package com.shirc.redis.delay.queue.common;
 import java.io.Serializable;
 
 /**
- * @Description 入参
- * @Author shirenchuang
- * @Date 2019/8/1 2:01 PM
- **/
+ * @author: 唐晓东
+ * @since: 18:57 2021/7/22
+ * @version: v1.0
+ * @description: 入参
+ */
 public class Args implements Serializable {
-
+    
     private static final long serialVersionUID = 66666L;
 
     /**唯一键 不能为空**/
